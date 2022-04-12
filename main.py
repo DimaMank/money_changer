@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-bot = telebot.TeleBot(config.token)
+# bot = telebot.TeleBot(config.token)
 
 @bot.message_handler(commands=['start'])  # Запускаем бот
 def welcome_start(message):
