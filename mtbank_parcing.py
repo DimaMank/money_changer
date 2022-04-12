@@ -3,14 +3,15 @@ import config
 import requests
 from bs4 import BeautifulSoup
 
-
 bot = telebot.TeleBot(config.token)
+
 
 @bot.message_handler(commands=['start'])  # Запускаем бот
 def welcome_start(message):
     bot.send_message(message.chat.id, 'Приветствую! Если вы хотите узнать курс покупки(вами) нажмите /buy, \n '
                                       'если вы хотите узнать курс продажи(вами) нажмите /sell \n'
                                       'Узнать сколько валюты вы можете купить на ваши рубли /change')
+
 
 @bot.message_handler(commands=['sell', 'buy', 'change'])  # Выводим список команд
 def kurs(message):
@@ -36,7 +37,7 @@ def kurs(message):
         print(USD_kurs)
         print(EUR_kurs)
         bot.send_message(message.chat.id, f'Курс покупки доллара = {USD_kurs} '
-                                          f'Курс покупки евро = {EUR_kurs}' )
+                                          f'Курс покупки евро = {EUR_kurs}')
     elif message.text == '/sell':
         url_Euro = 'https://bankchart.by/servisy/konverter_valyut/1064/1/0/978/974'
         url_USD = 'https://bankchart.by/servisy/konverter_valyut/1064/1/0/840/974'
@@ -54,7 +55,7 @@ def kurs(message):
         elem_kurs_value_USD = elem_kurs_USD.find('p')
         USD_kurs = elem_kurs_value_USD.text
         EUR_kurs = elem_kurs_value.text
-        bot.send_message(message.chat.id,f'Курс продажи доллара = {USD_kurs} '
+        bot.send_message(message.chat.id, f'Курс продажи доллара = {USD_kurs} '
                                           f'Курс продажи евро = {EUR_kurs}')
     elif message.text == '/change':
         bot.send_message(message.chat.id, 'Введите сумму в рублях')
@@ -85,8 +86,8 @@ def kurs(message):
             b = list(EUR_kurs)
             b[1] = '.'
             EUR_kurs = ''.join(b)
-            USD_summa = int(message.text)/float(USD_kurs)
-            EUR_summa = int(message.text)/float(EUR_kurs)
+            USD_summa = int(message.text) / float(USD_kurs)
+            EUR_summa = int(message.text) / float(EUR_kurs)
             bot.send_message(message.chat.id,
                              'Сумма в долларах = ' + str(USD_summa) + '\n' + 'Сумма в евро = ' + str(EUR_summa))
 
